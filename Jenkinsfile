@@ -7,10 +7,14 @@ pipeline {
         AWS_DEFAULT_REGION = "us-east-1"
     }
     stages {
+        stage("checkout code") {
+            steps {
+                checkout scm
+            }
+        }
         stage("Terraform init") {
             steps {
                 script {
-                    dir('terraform') {
                         sh "terraform init"
                     }
                 }
@@ -19,7 +23,6 @@ pipeline {
         stage("Terraform plan") {
             steps {
                 script {
-                    dir('kubernetes') {
                         sh "terraform plan"
                     }
                 }
@@ -28,7 +31,6 @@ pipeline {
         stage("Terraform apply") {
             steps {
                 script {
-                    dir('kubernetes') {
                         sh "terraform apply -auto-approve"
                     }
                 }
