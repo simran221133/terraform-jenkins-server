@@ -11,14 +11,7 @@ pipeline {
             steps {
                 script {
                     sh "terraform init"
-                    sh "terraform plan"     
-                }
-            }
-        }
-        stage("Deploy to EKS") {
-            steps {
-                script {
-                    sh "terraform apply"
+                    sh "terraform apply -auto-approve"
                 }
             }
         }
