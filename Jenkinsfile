@@ -7,32 +7,18 @@ pipeline {
         AWS_DEFAULT_REGION = "us-east-1"
     }
     stages {
-        stage("checkout code") {
-            steps {
-                checkout scm
-            }
-        }
-        stage("Terraform init") {
+        stage("Create an EKS Cluster") {
             steps {
                 script {
-                        sh "terraform init"
-                    }
+                    sh "terraform init"
+                    sh "terraform plan"     
                 }
             }
         }
-        stage("Terraform plan") {
+        stage("Deploy to EKS") {
             steps {
                 script {
-                        sh "terraform plan"
-                    }
-                }
-            }
-        }
-        stage("Terraform apply") {
-            steps {
-                script {
-                        sh "terraform apply -auto-approve"
-                    }
+                    sh "terraform apply"
                 }
             }
         }
